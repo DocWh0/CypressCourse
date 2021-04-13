@@ -83,6 +83,6 @@ it('Use Get with Find and Eq', () =>  {
 
 it.only('Find li element', () =>  {
     cy.visit("https://docs.cypress.io/api/commands/eq")
-    //cy.get('div:second').find('nav').find('ul').find('li').find('a').eq(1)
+    //cy.get('div').eq(2).find('nav').find('ul').find('li').find('a').eq(1)
     cy.get('a[href="#Syntax"]')
 });
