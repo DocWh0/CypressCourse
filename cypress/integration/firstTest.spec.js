@@ -94,7 +94,7 @@ it('select', ()=> {
 })
 
 
-//select
+//scrollIntoView
 it('scrollIntoView', ()=> {
     cy.visit('https://next.privat24.ua/mobile?lang=en') //site
         .get('[data-qa-node="lang"]') // 
@@ -104,9 +104,19 @@ it('scrollIntoView', ()=> {
 })
 
 
-//select
-it.only('scrollIntoView', ()=> {
+//scrollTo
+it('scrollIntoView', ()=> {
     cy.visit('https://next.privat24.ua/mobile?lang=en') //site 
         .wait(2000)
         .scrollTo(0, 500)
 })
+
+//trigger
+it.only('scrollIntoView', ()=> {
+    cy.visit('https://next.privat24.ua?lang=en') //site 
+        .contains('Services')
+        .wait(2000)
+        .trigger('mouseover')
+})
+
+
