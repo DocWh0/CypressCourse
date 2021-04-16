@@ -1,5 +1,7 @@
 ///<reference types="Cypress"/>
 import {mobileReplenishment} from "../support/pages/mobileReplenishment"
+import { Transfers } from "../support/pages/Transfers"
+
 
 
 it.only('Replenishment of Ukraine mobile phone number', () => {
@@ -15,7 +17,7 @@ it.only('Replenishment of Ukraine mobile phone number', () => {
     mobileReplenishment.checkDebitAmount('50')
     mobileReplenishment.checkDebitCommission('2')
     mobileReplenishment.checkReceiverAmount('50')
-    mobileReplenishment.checkPaymentCurrency(' UAH')
+    mobileReplenishment.checkPaymentCurrency('UAH')
 
 
 
@@ -80,46 +82,83 @@ it.only('Replenishment of Ukraine mobile phone number', () => {
 
 it('Money transfer to another card', () => {
     cy.visit('https://next.privat24.ua/money-transfer/card?lang=en')
-        .get('[data-qa-node="numberdebitSource"]')
-        .type('4552331448138217')
-        .get('[data-qa-node="expiredebitSource"]')
-        .type('0524') 
-        .get('[data-qa-node="cvvdebitSource"]')
-        .type('111')
-        .get('[data-qa-node="firstNamedebitSource"]')
-        .type('Shayne')
-        .get('[data-qa-node="lastNamedebitSource"]')
-        .type('McConnel')
-        .get('[data-qa-node="numberreceiver"]')
-        .type('5309 2330 3476 5085')
-        .get('[data-qa-node="firstNamereceiver"]')
-        .type('juliana')
-        .get('[data-qa-node="lastNamereceiver"]')
-        .type('Janssen')
-        .get('[data-qa-node="amount"]')
-        .type('300')
-        .get('[data-qa-node="toggle-comment"]')
-        .click()
-        .get('[data-qa-node="comment"]')
-        .type('Cypress test')
-        .get('button[type="submit"]')
-        .wait(3000)
-        .click()
-        .get('[data-qa-node="payer-card"]')
-        .should('have.text', '* 8217')
-        .get('[data-qa-node="receiver-card"]')
-        .should('have.text', '* 5085')
-        .get('[data-qa-node="payer-amount"]')
-        .should('have.text', '300 UAH')
-        .get('[data-qa-node="payer-currency"]')
-        .should('have.text', '88.87 UAH')
-        .get('[data-qa-node="total"]')
-        .find('span')
-        .should('contain.text', '388.87')
-        .get('[data-qa-node="total"]')
-        .find('small')
-        .should('contain.text', 'UAH')
-        .get('[data-qa-node="comment"]')
-        .should('have.text', 'Cypress test')
+
+        transfers.typeDebitCardData('4552331448138217', '0524', '111' )
+        transfers.typeDebitNameAndSurname('Shayne','McConnel')
+        transfers.typeRecieverCard('5309 2330 3476 5085')
+        transfers.typeRecieverNameAndSurname('juliana','Janssen')
+        transfers.typeAmount('300')
+        transfers.typeComment('Cypress test')
+        cy.wait(3000)
+        transfers.submitPayment()
+        transfers.checkCard('* 8217','* 5085')
+        transfers.checkAmountAndTotal('300', '388.87')
+        transfers.checkDebitCommision('88.87 UAH')
+        transfers.checkTotalCurrency('UAH')
+        transfers.checkComment('Cypress test')
+
+
+
+
+
+        /*
+        cy.get('[data-qa-node="numberdebitSource"]')
+            .type('4552331448138217')
+            .get('[data-qa-node="expiredebitSource"]')
+            .type('0524') 
+            .get('[data-qa-node="cvvdebitSource"]')
+            .type('111')
+
+        cy.get('[data-qa-node="firstNamedebitSource"]')
+            .type('Shayne')
+
+        cy.get('[data-qa-node="lastNamedebitSource"]')
+            .type('McConnel')
+
+        cy.get('[data-qa-node="numberreceiver"]')
+            .type('5309 2330 3476 5085')
+
+        cy.get('[data-qa-node="firstNamereceiver"]')
+            .type('juliana')
+
+        cy.get('[data-qa-node="lastNamereceiver"]')
+            .type('Janssen')
+
+        cy.get('[data-qa-node="amount"]')
+            .type('300')
+
+        cy.get('[data-qa-node="toggle-comment"]')
+            .click()
+            .get('[data-qa-node="comment"]')
+            .type('Cypress test')
+
+        cy.wait(3000)
+
+        cy.get('button[type="submit"]')
+            .click()
+
+        cy.get('[data-qa-node="payer-card"]')
+            .should('have.text', '* 8217')
+
+        cy.get('[data-qa-node="receiver-card"]')
+            .should('have.text', '* 5085')
+
+        cy.get('[data-qa-node="payer-amount"]')
+            .should('have.text', '300 UAH')
+
+        cy.get('[data-qa-node="payer-currency"]')
+            .should('have.text', '88.87 UAH')
+
+        cy.get('[data-qa-node="total"]')
+            .find('span')
+            .should('contain.text', '388.87')
+
+        cy.get('[data-qa-node="total"]')
+            .find('small')
+            .should('contain.text', 'UAH')
+
+        cy.get('[data-qa-node="comment"]')
+            .should('have.text', 'Cypress test') 
+                                                    */
 
 })
