@@ -1,15 +1,15 @@
 export class Transfers {
 
-    typeDebitCardData(cardNumber, expDate, cvv){
-        cy.get('[data-qa-node="numberdebitSource"]')
-            .type(cardNumber)
-        //card expire date
-        cy.get('[data-qa-node="expiredebitSource"]')
-            .type(expDate)
-        //cvv card 
-        cy.get('[data-qa-node="cvvdebitSource"]')
-            .type(cvv)
-    }
+    // typeDebitCardData(cardNumber, expDate, cvv){
+    //     cy.get('[data-qa-node="numberdebitSource"]')
+    //         .type(cardNumber)
+    //     //card expire date
+    //     cy.get('[data-qa-node="expiredebitSource"]')
+    //         .type(expDate)
+    //     //cvv card 
+    //     cy.get('[data-qa-node="cvvdebitSource"]')
+    //         .type(cvv)
+    // }
     typeDebitNameAndSurname(name, surname){
         cy.get('[data-qa-node="firstNamedebitSource"]')
             .type(name)
@@ -28,10 +28,10 @@ export class Transfers {
             .get('[data-qa-node="lastNamereceiver"]')
             .type(surname)
     }
-    typeAmount(amount){
-        cy.get('[data-qa-node="amount"]')
-            .type(amount)
-    }
+    // typeAmount(amount){
+    //     cy.get('[data-qa-node="amount"]')
+    //         .type(amount)
+    // }
 
     typeComment(comment){
         cy.get('[data-qa-node="toggle-comment"]')
@@ -39,10 +39,16 @@ export class Transfers {
             .get('[data-qa-node="comment"]')
             .type(comment)
     }
-    submitPayment(){
-        cy.get('[data-qa-node="submit"]')
-            .click()
-    }
+
+    // submitPayment(){
+    //     cy.get('[data-qa-node="submit"]')
+    //         .click()
+    // }
+        submitPayment(){
+            cy.contains('button','Transfer')
+                .click()
+        }
+
     checkCard(debitCard, recieverCard){
         cy.get('[data-qa-node="payer-card"]')
             .should('have.text', debitCard)

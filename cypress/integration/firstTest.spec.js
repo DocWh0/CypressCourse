@@ -1,18 +1,19 @@
 ///<reference types="Cypress"/>
-import {mobileReplenishment} from "../support/pages/mobileReplenishment"
-import { Transfers } from "../support/pages/Transfers"
+import { mobileReplenishment } from "../support/pages/mobileReplenishment"
+import { transfers } from "../support/pages/transfers"
+import { basePage } from "../support/pages/basePage"
 
 
 
-it.only('Replenishment of Ukraine mobile phone number', () => {
+it('Replenishment of Ukraine mobile phone number', () => {
     cy.visit('https://next.privat24.ua/mobile?lang=en')
 
 
     mobileReplenishment.typePhoneNumber('930358540')
-    mobileReplenishment.typeAmount('50')
-    mobileReplenishment.typeDebitCardData('4552331448138217', '0524', '111' )
+    basePage.typeAmount('50')
+    basePage.typeDebitCardData('4552331448138217', '0524', '111' )
     cy.wait(3000)
-    mobileReplenishment.submitPayment()
+    basePage.submitPayment()
     mobileReplenishment.checkDebitCard('4552 **** **** 8217')
     mobileReplenishment.checkDebitAmount('50')
     mobileReplenishment.checkDebitCommission('2')
@@ -83,16 +84,17 @@ it.only('Replenishment of Ukraine mobile phone number', () => {
 it('Money transfer to another card', () => {
     cy.visit('https://next.privat24.ua/money-transfer/card?lang=en')
 
-        transfers.typeDebitCardData('4552331448138217', '0524', '111' )
+        basePage.typeDebitCardData('4552331448138217', '0524', '111' )
         transfers.typeDebitNameAndSurname('Shayne','McConnel')
         transfers.typeRecieverCard('5309 2330 3476 5085')
         transfers.typeRecieverNameAndSurname('juliana','Janssen')
-        transfers.typeAmount('300')
+        basePage.typeAmount('300')
         transfers.typeComment('Cypress test')
         cy.wait(3000)
-        transfers.submitPayment()
+        basePage.submitPayment()
+        cy.wait(5000)
         transfers.checkCard('* 8217','* 5085')
-        transfers.checkAmountAndTotal('300', '388.87')
+        transfers.checkAmountAndTotal('300 UAH', '388.87')
         transfers.checkDebitCommision('88.87 UAH')
         transfers.checkTotalCurrency('UAH')
         transfers.checkComment('Cypress test')
