@@ -82,7 +82,7 @@ it('Replenishment of Ukraine mobile phone number', () => {
 
 })
 
-it.only('Money transfer to another card', () => {
+it.skip('Money transfer to another card', () => {
     cy.visit('https://next.privat24.ua/money-transfer/card?lang=en')
 
         basePage.typeDebitCardData('4552331448138217', '0524', '111' )
@@ -100,12 +100,13 @@ it.only('Money transfer to another card', () => {
         transfers.checkTotalCurrency('UAH')
         transfers.checkComment('Cypress test')
 
-
+})
 
 
 
         /*
         cy.get('[data-qa-node="numberdebitSource"]')
+
             .type('4552331448138217')
             .get('[data-qa-node="expiredebitSource"]')
             .type('0524') 
@@ -164,4 +165,40 @@ it.only('Money transfer to another card', () => {
             .should('have.text', 'Cypress test') 
                                                     */
 
-})
+
+    it.only('Example sending the GET request', ()=>  {
+        cy.request('https://next.privat24.ua')
+            .then((response)=>{
+                console.log(response);
+            })
+    })
+
+
+    it.only('Example sending the POST request', ()=>  {
+
+                const requestBody = {
+                    "action":"info",
+                    "phone":"+380930358540",
+                    "amount":50,
+                    "currency":"UAH",
+                    "cardCvv":"111",
+                    "card":"4552331448138217",
+                    "cardExp":"0526",
+                    "xref":"7c63543f6b0dc820b756d917351a3061",
+                    "_":1631022074923};
+
+                const headersData = {
+                    cookie: '_ga=GA1.2.297230247.1630913965; _gid=GA1.2.1974688840.1630913965; pubkey=00c28a5c146fb3bf503e02d5ee1e4f4f; lfp=9/6/2021, 10:39:36 AM; pa=1630937401999.45780.024315919456663337next.privat24.ua0.16439179751498267+4; fp=7'
+                    
+                }
+
+        cy.request({
+            method: "POST",
+            url: "https://next.privat24.ua/api/p24/pub/mobipay",
+            body: requestBody,
+            headers:headersData,
+        })
+            .then((response)=>{
+                console.log(response.body);
+            })
+    })
