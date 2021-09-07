@@ -12,6 +12,7 @@ it('Replenishment of Ukraine mobile phone number', () => {
     mobileReplenishment.typePhoneNumber('930358540')
     basePage.typeAmount('50')
     basePage.typeDebitCardData('4552331448138217', '0524', '111' )
+    transfers.typeDebitNameAndSurname('Shayne','McConnel')
     cy.wait(3000)
     basePage.submitPayment()
     mobileReplenishment.checkDebitCard('4552 **** **** 8217')
@@ -81,7 +82,7 @@ it('Replenishment of Ukraine mobile phone number', () => {
 
 })
 
-it('Money transfer to another card', () => {
+it.only('Money transfer to another card', () => {
     cy.visit('https://next.privat24.ua/money-transfer/card?lang=en')
 
         basePage.typeDebitCardData('4552331448138217', '0524', '111' )
@@ -93,9 +94,9 @@ it('Money transfer to another card', () => {
         cy.wait(3000)
         basePage.submitPayment()
         cy.wait(5000)
-        transfers.checkCard('* 8217','* 5085')
-        transfers.checkAmountAndTotal('300 UAH', '388.87')
-        transfers.checkDebitCommision('88.87 UAH')
+        transfers.checkCard('4552 3314 4813 8217','5309 2330 3476 5085')
+        transfers.checkAmountAndTotal('300 UAH', '385.51')
+        transfers.checkDebitCommision('85.51 UAH')
         transfers.checkTotalCurrency('UAH')
         transfers.checkComment('Cypress test')
 

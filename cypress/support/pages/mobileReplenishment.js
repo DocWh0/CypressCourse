@@ -8,7 +8,11 @@ export class MobilePhoneReplenishment {
 
 
 
-            
+    
+    // submitPayment(){
+    //     cy.get('[data-qa-node="submit"]')
+    //         .click()
+    //     }       
 
     checkDebitCard(debitCard){
         cy.get('[data-qa-node="card"]')

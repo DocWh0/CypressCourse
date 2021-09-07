@@ -14,6 +14,7 @@ export class BasePage {
         //cvv card 
         cy.get('[data-qa-node="cvvdebitSource"]')
             .type(cvv)
+        
 
     }
 

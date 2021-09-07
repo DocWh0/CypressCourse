@@ -44,10 +44,12 @@ export class Transfers {
     //     cy.get('[data-qa-node="submit"]')
     //         .click()
     // }
-        submitPayment(){
-            cy.contains('button','Transfer')
-                .click()
-        }
+ 
+        // submitPayment(){
+        //     cy.contains('button','Transfer')
+        //     //cy.get('button[type="submit"]')// analog
+        //         .click()
+        // }
 
     checkCard(debitCard, recieverCard){
         cy.get('[data-qa-node="payer-card"]')
@@ -59,7 +61,7 @@ export class Transfers {
         cy.get('[data-qa-node="payer-amount"]')
             .should('have.text', debitAmount)
             .get('[data-qa-node="total"]')
-            .find('span')
+            .find('b')
             .should('contain.text', totalAmount)
     }
 
@@ -70,7 +72,7 @@ export class Transfers {
 
     checkTotalCurrency(totalCurrency){
         cy.get('[data-qa-node="total"]')
-            .find('small')
+            .find('b')
             .should('contain.text', totalCurrency)
 
     }
