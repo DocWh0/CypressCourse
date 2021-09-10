@@ -2,6 +2,7 @@
 import { mobileReplenishment } from "../support/pages/mobileReplenishment"
 import { transfers } from "../support/pages/transfers"
 import { basePage } from "../support/pages/basePage"
+import { should } from "chai"
 
 
 
@@ -166,7 +167,7 @@ it.skip('Money transfer to another card', () => {
                                                     */
 
 
-    it.only('Example sending the GET request', ()=>  {
+    it.skip('Example sending the GET request', ()=>  {
         cy.request('https://next.privat24.ua')
             .then((response)=>{
                 console.log(response);
@@ -174,31 +175,65 @@ it.skip('Money transfer to another card', () => {
     })
 
 
-    it.only('Example sending the POST request', ()=>  {
+    it('Example sending the POST request', ()=>  {
 
-                const requestBody = {
-                    "action":"info",
-                    "phone":"+380930358540",
-                    "amount":50,
-                    "currency":"UAH",
-                    "cardCvv":"111",
-                    "card":"4552331448138217",
-                    "cardExp":"0526",
-                    "xref":"7c63543f6b0dc820b756d917351a3061",
-                    "_":1631022074923};
+        const requestBody = {
+            action:"info",
+            phone:"+380930358540",
+            amount:55,
+            currency:"UAH",
+            cardCvv:"111",
+            card:"4552331448138217",
+            cardExp:"0526",
+            xref:"1bb81639785b55b5787237a6ed099a07",
+            _:1631280270372};
 
                 const headersData = {
-                    cookie: '_ga=GA1.2.297230247.1630913965; _gid=GA1.2.1974688840.1630913965; pubkey=00c28a5c146fb3bf503e02d5ee1e4f4f; lfp=9/6/2021, 10:39:36 AM; pa=1630937401999.45780.024315919456663337next.privat24.ua0.16439179751498267+4; fp=7'
+                    cookie: '_ga=GA1.2.297230247.1630913965; _gid=GA1.2.1936741036.1631280219; _gat_gtag_UA_29683426_11=1; pubkey=d431c3de7cccc64c1ff67396f9c1998b; lfp=9/6/2021, 10:39:36 AM; pa=1630937401999.45780.024315919456663337next.privat24.ua0.16439179751498267+5; fp=9'
                     
-                }
+                };
 
         cy.request({
             method: "POST",
             url: "https://next.privat24.ua/api/p24/pub/mobipay",
             body: requestBody,
             headers:headersData,
-        })
-            .then((response)=>{
-                console.log(response.body);
+        }).then((response)=>{
+                    expect(response).to.have.property('status').to.equal=(200)
+                    expect(response.body).to.have.property('status').to.equal=('error')
+                    expect(response.body.data).to.have.property('amount').to.equal=(51)
+
+                   // expect(response.body.data[i]).to.have.property('amount').to.equal=(50)
+                   // expect(response.body.data[i]).to.have.property('amount').to.equal=(50)
+                console.log(response);
+            });
+    });
+
+
+    it.only("Example sending the POST request with Should verification", ()=>  {
+
+        const requestBody = {
+            action:"info",
+            phone:"+380930358540",
+            amount:55,
+            currency:"UAH",
+            cardCvv:"111",
+            card:"4552331448138217",
+            cardExp:"0526",
+            xref:"1bb81639785b55b5787237a6ed099a07",
+            _:1631280270372};
+
+        const headersData = {
+            cookie: '_ga=GA1.2.297230247.1630913965; _gid=GA1.2.1936741036.1631280219; _gat_gtag_UA_29683426_11=1; pubkey=d431c3de7cccc64c1ff67396f9c1998b; lfp=9/6/2021, 10:39:36 AM; pa=1630937401999.45780.024315919456663337next.privat24.ua0.16439179751498267+5; fp=9'
+            
+        };
+
+        cy.request({
+            method: "POST",
+            url: "https://next.privat24.ua/api/p24/pub/mobipay",
+            body: requestBody,
+            headers:headersData,
+            }).its('body').should('contain', {
+                status: 'success'
             })
-    })
+    });
