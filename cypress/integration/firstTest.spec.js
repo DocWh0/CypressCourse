@@ -2,11 +2,12 @@
 import { mobileReplenishment } from "../support/pages/mobileReplenishment"
 import { transfers } from "../support/pages/transfers"
 import { basePage } from "../support/pages/basePage"
-import { should } from "chai"
+
+//import { should } from "chai"
 
 
 
-it('Replenishment of Ukraine mobile phone number', () => {
+it.skip('Replenishment of Ukraine mobile phone number', () => {
     cy.visit('https://next.privat24.ua/mobile?lang=en')
 
 
@@ -167,7 +168,7 @@ it.skip('Money transfer to another card', () => {
                                                     */
 
 
-    it.skip('Example sending the GET request', ()=>  {
+    it('Example sending the GET request', ()=>  {
         cy.request('https://next.privat24.ua')
             .then((response)=>{
                 console.log(response);
@@ -180,16 +181,16 @@ it.skip('Money transfer to another card', () => {
         const requestBody = {
             action:"info",
             phone:"+380930358540",
-            amount:55,
+            amount:50,
             currency:"UAH",
             cardCvv:"111",
             card:"4552331448138217",
             cardExp:"0526",
-            xref:"1bb81639785b55b5787237a6ed099a07",
-            _:1631280270372};
+            xref:"a444a8d43da329bee689b62ecb4fa2ab","_":1633954568271};
+            
 
                 const headersData = {
-                    cookie: '_ga=GA1.2.297230247.1630913965; _gid=GA1.2.1936741036.1631280219; _gat_gtag_UA_29683426_11=1; pubkey=d431c3de7cccc64c1ff67396f9c1998b; lfp=9/6/2021, 10:39:36 AM; pa=1630937401999.45780.024315919456663337next.privat24.ua0.16439179751498267+5; fp=9'
+                    cookie: '_ga=GA1.2.2098389855.1633692761; _gid=GA1.2.399653730.1633954440; pubkey=6a1d8e93a69cf2408b501252c0db18c8; lfp=10/8/2021, 2:32:52 PM; pa=1633692773243.09470.10202770068210754next.privat24.ua0.4608886798981999+2; fp=3'
                     
                 };
 
@@ -200,33 +201,36 @@ it.skip('Money transfer to another card', () => {
             headers:headersData,
         }).then((response)=>{
                     expect(response).to.have.property('status').to.equal=(200)
-                    expect(response.body).to.have.property('status').to.equal=('error')
-                    expect(response.body.data).to.have.property('amount').to.equal=(51)
+                    expect(response.body).to.have.property('status').to.equal('success')
+                    expect(response.body.data).to.have.property('amount').to.equal=(50)
 
                    // expect(response.body.data[i]).to.have.property('amount').to.equal=(50)
-                   // expect(response.body.data[i]).to.have.property('amount').to.equal=(50)
+                   //проверка в цикле
+                   // expect(response.body.data[0]).to.have.property('amount').to.equal=(50)
+                   // 0,1,2,3 - для проверки конкретного елемента в массиве
                 console.log(response);
             });
     });
 
 
-    it.only("Example sending the POST request with Should verification", ()=>  {
+    it("Example sending the POST request with Should verification", ()=>  {
 
         const requestBody = {
             action:"info",
             phone:"+380930358540",
-            amount:55,
+            amount:50,
             currency:"UAH",
             cardCvv:"111",
             card:"4552331448138217",
             cardExp:"0526",
-            xref:"1bb81639785b55b5787237a6ed099a07",
-            _:1631280270372};
+            // Нужно всегда заменять xref - он в Request Payload
+            xref:"a444a8d43da329bee689b62ecb4fa2ab","_":1633954568271};
 
         const headersData = {
-            cookie: '_ga=GA1.2.297230247.1630913965; _gid=GA1.2.1936741036.1631280219; _gat_gtag_UA_29683426_11=1; pubkey=d431c3de7cccc64c1ff67396f9c1998b; lfp=9/6/2021, 10:39:36 AM; pa=1630937401999.45780.024315919456663337next.privat24.ua0.16439179751498267+5; fp=9'
+            cookie: '_ga=GA1.2.2098389855.1633692761; _gid=GA1.2.399653730.1633954440; pubkey=6a1d8e93a69cf2408b501252c0db18c8; lfp=10/8/2021, 2:32:52 PM; pa=1633692773243.09470.10202770068210754next.privat24.ua0.4608886798981999+2; fp=3'
             
         };
+        // Нужно всегда заменять cookie - они в Request Headers
 
         cy.request({
             method: "POST",
@@ -235,5 +239,7 @@ it.skip('Money transfer to another card', () => {
             headers:headersData,
             }).its('body').should('contain', {
                 status: 'success'
+            }).its('data').should('contain', {
+                status: 'ok'
             })
     });
