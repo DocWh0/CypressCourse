@@ -1,6 +1,19 @@
 {
-    "baseUrl" : "https://next.privat24.ua",
-    "ignoreTestFiles" : "**/examples/*",
-    "viewportWidth": 1920,
-    "viewportHeight": 1080
+  "imageConfig": {
+    "createDiffImage": true,
+    "threshold": 0.01,
+    "thresholdType": "percent"
+  },
+  "name": "custom image name",
+  "separator": "custom image separator",
+
+  "ignoreTestFiles": [
+    "**/examples/*",
+    "**/__snapshots__/*",
+    "**/__image_snapshots__/*"
+  ],
+
+  "viewportWidth": 1920,
+  "viewportHeight": 1080,
+  "baseUrl": "https://next.privat24.ua"
 }
